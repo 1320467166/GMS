@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="GMS">
+    <output-path>$PROJECT_DIR$/classes/artifacts/GMS</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="GMS" />
+          <element id="library" level="project" name="gms" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$USER_HOME$/Desktop/jar/commons-dbutils-1.7.jar" />
+          <element id="file-copy" path="$USER_HOME$/Desktop/jar/commons-beanutils-1.9.4.jar" />
+          <element id="file-copy" path="$USER_HOME$/Desktop/jar/poi-5.2.3.jar" />
+          <element id="file-copy" path="$USER_HOME$/Desktop/jar/mysql-connector-java-8.0.29.jar" />
+          <element id="file-copy" path="$USER_HOME$/Desktop/jar/javax.servlet-api-4.0.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/Desktop/jar/fastjson-2.0.21.jar" />
+          <element id="file-copy" path="$USER_HOME$/Desktop/jar/jasper-6.0.13.jar" />
+          <element id="file-copy" path="$USER_HOME$/Desktop/jar/poi-ooxml-5.2.0.jar" />
+          <element id="file-copy" path="$USER_HOME$/Desktop/jar/c3p0-0.9.5.5.jar" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="GMS/web/Web" />
+    </root>
+  </artifact>
+</component>
