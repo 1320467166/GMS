@@ -317,7 +317,7 @@
                                 <div class="row"style="margin-top: 3px;">\
                                     <div class="col-md-2" style="margin-top: 5px;"><span>开放时间:</span></div>\
                                     <div class="col-md-9" style="padding-left:0px">\
-                                        <input type="hidden" id="venue_Open" value="6">\
+                                        <input type="hidden" id="venue_Open" value="9">\
                                         <select id="in_venue_st" onchange="add_venue_st(this)" class="form-control">\
                                             <option value="9">9:00</option>\
                                             <option value="10">10:00</option>\
@@ -335,7 +335,7 @@
                                 <div class="row"style="margin-top: 3px;">\
                                     <div class="col-md-2" style="margin-top: 5px;"><span>关闭时间:</span></div>\
                                     <div class="col-md-9" style="padding-left:0px">\
-                                        <input type="hidden" id="venue_Close" value="7">\
+                                        <input type="hidden" id="venue_Close" value="19">\
                                         <select id="in_venue_ed" onchange="add_venue_ed(this)" class="form-control">\
                                             <option value="10">10:00</option>\
                                             <option value="11">11:00</option>\

@@ -23,6 +23,7 @@ public interface AdminDao {
 	
 	public void add_venue(Gms_Venue venue) throws SQLException;
 	public void del_venue(String venue_id) throws SQLException;
+	public void del_venue_state(String venue_id) throws SQLException;
 	public void update_venue(Gms_Venue venue) throws SQLException;
 	public List<Gms_Venue> query_venueByKey(int currentPage, int currentCount, String query_key) throws SQLException;
 	public List<Gms_User> query_userByKey(int currentPage, int currentCount, String query_key) throws SQLException;

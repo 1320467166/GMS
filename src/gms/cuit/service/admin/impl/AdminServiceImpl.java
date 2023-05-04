@@ -117,6 +117,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void del_venue(String venue_id) throws SQLException {
 		adminDao.del_venue(venue_id);
+		adminDao.del_venue_state(venue_id);
 	}
 
 	@Override

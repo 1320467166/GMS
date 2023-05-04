@@ -104,6 +104,13 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
+    public void del_venue_state(String venue_id) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "delete from gms_vdstate where vdstate_id = ?";
+        runner.update(sql, venue_id);
+    }
+
+    @Override
     public void update_venue(Gms_Venue venue) throws SQLException {
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
         String sql = "update gms_venue set venue_type=?,venue_name=?,venue_price=?, "

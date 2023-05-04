@@ -478,7 +478,7 @@
 	    //清空
 	    $("#in_venue_ed").empty();
 	    //添加
-	    for(var i=parseInt(st)+1;i<=19;i++){
+	    for(var i=parseInt(st)+1;i<=22;i++){
 	        $("#in_venue_ed").append("<option value='"+i+"'>"+i+":00</option>");
 	    }    
 	}
