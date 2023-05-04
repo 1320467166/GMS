@@ -8,6 +8,7 @@ import gms.cuit.entity.Gms_Admin;
 import gms.cuit.entity.Gms_Notice;
 import gms.cuit.entity.Gms_Venue;
 import gms.cuit.entity.Gms_User;
+import gms.cuit.entity.Gms_Vdstate;
 
 public interface AdminDao {
 	public Gms_Admin login(Gms_Admin admin) throws SQLException;
@@ -50,4 +51,9 @@ public interface AdminDao {
 	public Double get_summaryTodayOrderProfit(String date_today) throws SQLException;
 	public List<Map<String, Object>> query_orderByLatest(int get_count) throws SQLException;
 	public int get_orderCountByDateAndVen(String date_today,String venitemString) throws SQLException;
+
+	List<Gms_Vdstate> getVdstateStByVenueId(String venue_id) throws SQLException;
+	public void update_vdstate(Gms_Vdstate state) throws SQLException;
+
+    void inset(Gms_Vdstate gms_vdstate) throws SQLException;
 }

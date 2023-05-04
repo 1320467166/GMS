@@ -4,15 +4,20 @@ import java.math.RoundingMode;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import gms.cuit.entity.*;
+import gms.cuit.utils.DateUtil;
 import org.apache.commons.dbutils.QueryRunner;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import gms.cuit.dao.AdminDao;
 import gms.cuit.dao.impl.AdminDaoImpl;
 import gms.cuit.service.admin.AdminService;
@@ -75,6 +80,38 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void add_venue(Gms_Venue venue) throws SQLException {
 		adminDao.add_venue(venue);
+		//添加场馆则把后未来一百天的场馆
+		List<LocalDate> nextDate = DateUtil.getNextDate();
+		StringBuilder stringBuilder = new StringBuilder("00000000000000000000000");
+		//00000000000000000000000如果九点开门，得修改第十位
+		for (int i = venue.getVenue_Open() ; i < venue.getVenue_Close(); i++) {
+			stringBuilder.setCharAt(i,'1');
+		}
+		nextDate.stream().forEach(localDate -> {
+			Gms_Vdstate gms_vdstate = new Gms_Vdstate();
+			gms_vdstate.setVdstate_St(stringBuilder.toString());
+			gms_vdstate.setVdstate_Id(venue.getVenue_Id());
+			gms_vdstate.setVdstate_Date(convertToDate(localDate));
+			try {
+				adminDao.inset(gms_vdstate);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		});
+
+	}
+
+	public java.util.Date convertToDate(LocalDate localDate) {
+		if (localDate == null) {
+			return null;
+		}
+		java.util.Date date = null;
+		try {
+			date = Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		} catch (DateTimeParseException e) {
+			e.printStackTrace();
+		}
+		return date;
 	}
 
 	@Override
@@ -83,10 +120,38 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void update_venue(Gms_Venue venue) throws SQLException {
+	public void update_venue(Gms_Venue venue) throws Exception {
+		//更新基本信息
 		adminDao.update_venue(venue);
+		//场馆开放信息
+		openAndClose(venue);
 	}
 
+	//获取场馆开关信息
+	private void openAndClose(Gms_Venue venue) throws Exception {
+		List<Gms_Vdstate> VdstateList = adminDao.getVdstateStByVenueId(venue.getVenue_Id());
+		if (VdstateList != null && VdstateList.size() != 0) {
+			String vdstate_st = VdstateList.get(0).getVdstate_St();
+			StringBuilder stringBuilder = new StringBuilder("00000000000000000000000");
+			//00000000000000000000000如果九点开门，得修改第十位
+			for (int i = venue.getVenue_Open() ; i < venue.getVenue_Close(); i++) {
+				stringBuilder.setCharAt(i,'1');
+			}
+			VdstateList.stream().forEach( vo ->{
+				//若已被预约则不处理
+				if (!vo.getVdstate_St().contains("2")) {
+					//按照最新的
+					vo.setVdstate_St(stringBuilder.toString());
+					try {
+						adminDao.update_vdstate(vo);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+
+	}
 	@Override
 	public PageBean<Gms_Venue> query_venueByKey(int currentPage, int currentCount, String query_key) throws SQLException {
 		PageBean pageBean = new PageBean();

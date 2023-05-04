@@ -332,7 +332,7 @@
 				//toastr.warning('两次填写密码不一致');
 				showMessage('两次填写密码不一致',2000,true,'bounceIn-hastrans','bounceOut-hastrans');
 			}
-			else if(md5($('#prepassword').val().trim())!="${user.user_Password}"){
+			else if($('#prepassword').val().trim()!="${user.user_Password}"){
 				//toastr.error('原密码填写错误');
 				showMessage('原密码填写错误',2000,true,'bounceIn-hastrans','bounceOut-hastrans');
 			}

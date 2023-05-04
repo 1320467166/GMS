@@ -18,12 +18,17 @@
 			<img class="imgs" src="${pageContext.request.contextPath}/img/count.png" />
 			<h1>会员注册</h1>
 			是否为校外用户：
-			<select class="select" id="is_student" name="is_student" required = "true">
+			<select class="select" id="is_Student" name="is_Student" required = "true">
 				<option value="1">是</option>
 				<option value="0">否</option>
 			</select>
 			<input type="text" class="input-box" id="user_Id" name="user_Id" placeholder="账号" required="true"/>
-			<input type="text" class="input-box" id="user_Sex" name="user_Sex" placeholder="性别" required="true"/>
+			性别
+			<select class="select" id="user_Sex" name="user_Sex" required="true">
+				<option value="男">男</option>
+				<option value="女">女</option>
+			</select>
+<%--			<input type="text" class="input-box" id="user_Sex" name="user_Sex" placeholder="性别" required="true"/>--%>
 			<input type="text" class="input-box" id="user_Age" name="user_Age" placeholder="年龄" required="true"/>
 			<input type="password" class="input-box" id="user_Password" name="user_Password" placeholder="密码" required="true"/>
 			<input type="password" class="input-box" id="user_rePassword" name="user_rePassword" placeholder="确认密码"required="true" >

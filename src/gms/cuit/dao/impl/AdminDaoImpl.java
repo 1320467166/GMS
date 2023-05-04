@@ -1,6 +1,7 @@
 package gms.cuit.dao.impl;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +11,13 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
-
+import org.apache.commons.dbutils.handlers.ArrayHandler;
 import gms.cuit.dao.AdminDao;
 import gms.cuit.entity.Gms_Admin;
 import gms.cuit.entity.Gms_Notice;
 import gms.cuit.entity.Gms_Venue;
 import gms.cuit.entity.Gms_User;
+import gms.cuit.entity.Gms_Vdstate;
 import gms.cuit.utils.DataSourceUtils;
 
 public class AdminDaoImpl implements AdminDao {
@@ -314,7 +316,7 @@ public class AdminDaoImpl implements AdminDao {
     @Override
     public Integer get_summaryTodayOrderCount(String date_today) throws SQLException {
         String date_st = date_today + " 00:00:00";
-        String date_ed = date_today + " 23:00:00";
+        String date_ed = date_today + " 23:59:59";
         String sql = "SELECT COALESCE(COUNT(*),0) FROM gms_order WHERE order_mktime BETWEEN '"
                 + date_st + "' AND '" + date_ed + "'";
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
@@ -325,7 +327,7 @@ public class AdminDaoImpl implements AdminDao {
     @Override
     public Double get_summaryTodayOrderProfit(String date_today) throws SQLException {
         String date_st = date_today + " 00:00:00";
-        String date_ed = date_today + " 23:00:00";
+        String date_ed = date_today + " 23:59:59";
         String sql = "SELECT COALESCE(SUM(order_price),0) FROM gms_order WHERE order_mktime BETWEEN '"
                 + date_st + "' AND '" + date_ed + "'";
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
@@ -344,12 +346,35 @@ public class AdminDaoImpl implements AdminDao {
     @Override
     public int get_orderCountByDateAndVen(String date_today, String venitemString) throws SQLException {
         String date_st = date_today + " 00:00:00";
-        String date_ed = date_today + " 23:00:00";
+        String date_ed = date_today + " 23:59:59";
         String sql = "SELECT COALESCE(COUNT(*),0) FROM gms_order,gms_venue WHERE gms_venue.venue_id=gms_order.order_venue_id "
                 + "AND venue_type='" + venitemString + "' "
                 + "AND order_mktime BETWEEN '" + date_st + "' AND '" + date_ed + "' ";
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
         Long query = (Long) runner.query(sql, new ScalarHandler());
         return query.intValue();
+    }
+
+    @Override
+    public List<Gms_Vdstate> getVdstateStByVenueId(String venue_id) throws SQLException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = dateFormat.format(new java.util.Date());
+        String sql = "select * from gms_vdstate where vdstate_id = '" + venue_id + "' and vdstate_date >= '" + currentDate + "'";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        return runner.query(sql, new BeanListHandler<>(Gms_Vdstate.class));
+    }
+
+    @Override
+    public void inset(Gms_Vdstate gms_vdstate) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "insert into gms_vdstate values(?,?,?)";
+        runner.update(sql, gms_vdstate.getVdstate_Id(), gms_vdstate.getVdstate_Date(), gms_vdstate.getVdstate_St());
+    }
+
+    @Override
+    public void update_vdstate(Gms_Vdstate state) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "update gms_vdstate set vdstate_st=? where vdstate_id=? and vdstate_date=?";
+        runner.update(sql, state.getVdstate_St(),state.getVdstate_Id(),state.getVdstate_Date());
     }
 }

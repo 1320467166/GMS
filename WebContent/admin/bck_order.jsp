@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <form id="query_order" method="POST" action="${pageContext.request.contextPath}/admin?method=query_order">
-                        <span>关键字查询:</span>
+                        <span>预约场地查询:</span>
                         <input type="text" class="form1-tx" id="query_key" name="query_key" value="${query_key}">
                         <input type="hidden" id="currentPage" name="currentPage" value="${pageBean_order.currentPage}">
                         <input type="hidden" id="currentCount" name="currentCount" value="${pageBean_order.currentCount}">

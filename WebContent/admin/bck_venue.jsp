@@ -52,7 +52,7 @@
             border-color: #e3e3e3;
         }
     </style>
-    
+
 </head>
 
 <body>
@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <form id="query_venue" method="POST" action="${pageContext.request.contextPath}/admin?method=query_venue">
-                        <span>关键字查询:</span>
+                        <span>场馆名字查询:</span>
                         <input type="text" class="form1-tx" id="query_key" name="query_key" value="${query_key}">
                         <input type="hidden" id="currentPage" name="currentPage" value="${pageBean_venue.currentPage}">
                         <input type="hidden" id="currentCount" name="currentCount" value="${pageBean_venue.currentCount}">
@@ -167,8 +167,8 @@
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
-							</c:if>	
-							
+							</c:if>
+
 							<c:if test="${pageBean_venue.totalPage<=5 }">
 								<c:forEach begin="1" end="${pageBean_venue.totalPage }" var="page">
 									<!-- 判断当前页 -->
@@ -211,18 +211,18 @@
 								</c:forEach>
 								<li><a href="javascript:void(0);" onclick="changePage('${pageBean_venue.currentPage+3}')">...</a></li>
 							</c:if>
-							
+
 				             <!-- 判断当前页是否是最后一页 -->
 							<c:if test="${pageBean_venue.currentPage==pageBean_venue.totalPage }">
 								<li class="disabled">
-									<a href="javascript:void(0);" aria-label="Next"> 
+									<a href="javascript:void(0);" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>
 							</c:if>
 							<c:if test="${pageBean_venue.currentPage!=pageBean_venue.totalPage }">
 								<li>
-									<a href="javascript:void(0);" onclick="changePage(${pageBean_venue.currentPage+1})" aria-label="Next"> 
+									<a href="javascript:void(0);" onclick="changePage(${pageBean_venue.currentPage+1})" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>
@@ -254,7 +254,7 @@
         //1 将页码的值放入对应表单隐藏域中
         $("#currentPage").val(pageNum);
         //2 提交表单
-        $("#query_venue").submit();				
+        $("#query_venue").submit();
      };
 
      /* 改变每页显示的页数 */
@@ -263,12 +263,12 @@
          $("#currentPage").val("1");
          $("#query_venue").submit();
      }
-	
+
      /* 导出场馆数据 */
      function export_venue(){
     	 this.location.href="${pageContext.request.contextPath}/admin?method=export_venue";
      }
-     
+
     /* 添加新的场馆 */
     function openadd_venue_Modal() {
         var fatherBody = $(window.top.document.body); //获得父窗体的body
@@ -293,7 +293,13 @@
                                 <div class="row"style="margin-top: 3px;">\
                                     <div class="col-md-2" style="margin-top: 5px;"><span>场馆类别:</span></div>\
                                     <div class="col-md-9 " style="padding-left:0px">\
-                                        <input type="text" id="venue_Type" class="form-control" required autofocus>\
+                                        <select id="venue_Type" class="form-control">\
+                                            <option value="乒乓球场">乒乓球场</option>\
+                                            <option value="排球场">排球场</option>\
+                                            <option value="篮球场">篮球场</option>\
+                                            <option value="网球场">网球场</option>\
+                                            <option value="羽毛球场">羽毛球场</option>\
+                                        </select>\
                                     </div>\
                                 </div>\
                                 <div class="row"style="margin-top: 3px;">\
@@ -313,9 +319,6 @@
                                     <div class="col-md-9" style="padding-left:0px">\
                                         <input type="hidden" id="venue_Open" value="6">\
                                         <select id="in_venue_st" onchange="add_venue_st(this)" class="form-control">\
-                                            <option value="6">6:00</option>\
-                                            <option value="7">7:00</option>\
-                                            <option value="8">8:00</option>\
                                             <option value="9">9:00</option>\
                                             <option value="10">10:00</option>\
                                             <option value="11">11:00</option>\
@@ -326,9 +329,6 @@
                                             <option value="16">16:00</option>\
                                             <option value="17">17:00</option>\
                                             <option value="18">18:00</option>\
-                                            <option value="19">19:00</option>\
-                                            <option value="20">20:00</option>\
-                                            <option value="21">21:00</option>\
                                         </select>\
                                     </div>\
                                 </div>\
@@ -337,9 +337,6 @@
                                     <div class="col-md-9" style="padding-left:0px">\
                                         <input type="hidden" id="venue_Close" value="7">\
                                         <select id="in_venue_ed" onchange="add_venue_ed(this)" class="form-control">\
-                                            <option value="7">7:00</option>\
-                                            <option value="8">8:00</option>\
-                                            <option value="9">9:00</option>\
                                             <option value="10">10:00</option>\
                                             <option value="11">11:00</option>\
                                             <option value="12">12:00</option>\
@@ -350,9 +347,6 @@
                                             <option value="17">17:00</option>\
                                             <option value="18">18:00</option>\
                                             <option value="19">19:00</option>\
-                                            <option value="20">20:00</option>\
-                                            <option value="21">21:00</option>\
-                                            <option value="22">22:00</option>\
                                         </select>\
                                     </div>\
                                 </div>\
@@ -376,7 +370,7 @@
        		op_st+="<option value=\""+ix+"\">"+ix+":00</option>";
 		var op_ed = "";
     	for(var ix=venue_Close;ix<=22;ix++)
-    		op_ed+="<option value=\""+ix+"\">"+ix+":00</option>";	
+    		op_ed+="<option value=\""+ix+"\">"+ix+":00</option>";
         //为父窗体添加modal内容
         fatherBody.append(' \
         <div class="modal fade in" id="update_venue_model" role="dialog" style="padding-left: 16px; display: block;">\
@@ -388,11 +382,14 @@
                                         aria-hidden="true">&times;</span></button>\
                                 <h4 class="modal-title" style="text-align: center;">修改场馆</h4>\
                             </div>\
-                            <div class="modal-body">\
-                                <div class="row" style="margin-top: 3px;">\
-                                    <div class="col-md-2" style="margin-top: 5px;" ><span>场馆名字:</span></div>\
-                                    <div class="col-md-9 " style="padding-left:0px">\
-                                        <input type="text" id="venue_Name" class="form-control" readonly="readonly" required autofocus value='
+                            <input type="hidden" id="venue_Id" value='
+								+venue_Id+
+							'>\
+             <div class="modal-body">\
+                 <div class="row" style="margin-top: 3px;">\
+                     <div class="col-md-2" style="margin-top: 5px;" ><span>场馆名字:</span></div>\
+                     <div class="col-md-9 " style="padding-left:0px">\
+                         <input type="text" id="venue_Name" class="form-control" readonly="readonly" required autofocus value='
                                         	+venue_Name+
                                            	'>\
                                     </div>\
@@ -400,9 +397,13 @@
                                 <div class="row"style="margin-top: 3px;">\
                                     <div class="col-md-2" style="margin-top: 5px;"><span>场馆类别:</span></div>\
                                     <div class="col-md-9 " style="padding-left:0px">\
-                                        <input type="text" id="venue_Type" class="form-control" required autofocus value='
-                                        	+venue_Type+
-                                           	'>\
+                                         <select id="venue_Type" class="form-control">\
+                                            <option value="乒乓球场">乒乓球场</option>\
+                                            <option value="排球场">排球场</option>\
+                                            <option value="篮球场">篮球场</option>\
+                                            <option value="网球场">网球场</option>\
+                                            <option value="羽毛球场">羽毛球场</option>\
+                                        </select>\
                                     </div>\
                                 </div>\
                                 <div class="row"style="margin-top: 3px;">\
@@ -439,7 +440,7 @@
                                         	+venue_Close+
                                            	'>\
                                         <select id="in_venue_ed" onchange="add_venue_ed(this)" class="form-control">'
-                                         +op_ed+   
+                                         +op_ed+
                                         '</select>\
                                     </div>\
                                 </div>\

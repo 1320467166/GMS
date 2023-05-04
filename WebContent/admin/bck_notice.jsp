@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <form id="query_notice" method="POST" action="${pageContext.request.contextPath}/admin?method=query_notice">
-                        <span>关键字查询:</span>
+                        <span>通知标题查询:</span>
                         <input type="text" class="form1-tx" id="query_key" name="query_key" value="${query_key}">
                         <input type="hidden" id="currentPage" name="currentPage" value="${pageBean_notice.currentPage}">
                         <input type="hidden" id="currentCount" name="currentCount" value="${pageBean_notice.currentCount}">

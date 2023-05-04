@@ -303,7 +303,7 @@
         var options = {
             title: {
                 display: true,
-                text: '订单场馆分布'
+                text: '今日订单场馆分布'
             }
         };
         var ctx = document.getElementById(id).getContext("2d");

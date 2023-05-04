@@ -438,7 +438,7 @@
 			else if($('#newpassword').val().trim()!=$('#repassword').val().trim()){
 				toastr.warning('两次填写密码不一致');
 			}
-			else if(md5($('#prepassword').val().trim())!="${admin.admin_Password}"){
+			else if($('#prepassword').val().trim()!="${admin.admin_Password}"){
 				toastr.error('原密码填写错误');
 			}
 			else{
@@ -478,7 +478,7 @@
 	    //清空
 	    $("#in_venue_ed").empty();
 	    //添加
-	    for(var i=parseInt(st)+1;i<=22;i++){
+	    for(var i=parseInt(st)+1;i<=19;i++){
 	        $("#in_venue_ed").append("<option value='"+i+"'>"+i+":00</option>");
 	    }    
 	}

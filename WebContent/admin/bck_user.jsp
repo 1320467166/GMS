@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <form id="query_venue" method="POST" action="${pageContext.request.contextPath}/admin?method=query_user">
-                        <span>关键字查询:</span>
+                        <span>用户账号查询:</span>
                         <input type="text" class="form1-tx" id="query_key" name="query_key" value="${query_key}">
                         <input type="hidden" id="currentPage" name="currentPage" value="${pageBean_user.currentPage}">
                         <input type="hidden" id="currentCount" name="currentCount" value="${pageBean_user.currentCount}">
@@ -93,7 +93,7 @@
 		                 <td>${user.user_Sex}</td>
 		                 <td>${user.user_Age}</td>
 		                 <td>${user.user_Email}</td>
-		                 <td>${user.is_student}</td>
+		                 <td>${user.is_Student}</td>
 		                 <td>${user.balance}</td>
 	                     <td>
 	                        <button type="button" onclick="openupdate_user_Modal('${user.user_Id}','${user.balance}')"

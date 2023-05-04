@@ -149,7 +149,7 @@ public class AdminServlet extends BaseServlet {
         HttpSession session = request.getSession();
         String username = ((Gms_Admin) session.getAttribute("admin")).getAdmin_Username();
         String newpassword = request.getParameter("newpassword");
-        adminService.update_password(username, MD5Utils.md5(newpassword));
+        adminService.update_password(username, newpassword);
         session.setAttribute("admin", null);
         request.getRequestDispatcher("admin/bck_login.jsp").forward(request, response);
     }
@@ -369,7 +369,7 @@ public class AdminServlet extends BaseServlet {
      * @throws SQLException
      */
     public void update_venue(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws Exception {
         Map<String, String[]> properties = request.getParameterMap();
         Gms_Venue venue = new Gms_Venue();
         try {
